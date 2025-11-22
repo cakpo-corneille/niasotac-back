@@ -10,7 +10,7 @@ def main():
     # En production: exporter DJANGO_SETTINGS_MODULE=niasotac_backend.config.prod
     os.environ.setdefault(
         'DJANGO_SETTINGS_MODULE',
-        os.getenv('DJANGO_SETTINGS_MODULE', 'niasotac_backend.config.prod')
+        os.getenv('DJANGO_SETTINGS_MODULE', 'niasotac_backend.config.dev')
     )
     try:
         from django.core.management import execute_from_command_line
