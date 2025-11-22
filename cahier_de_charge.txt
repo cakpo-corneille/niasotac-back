@@ -1,0 +1,215 @@
+Cahier des charges – Backend NIASOTAC (Résumé condensé)
+🎯 Objectif
+Backend prêt production : sécurisé, scalable, testable, maintenable, documenté. Chaque ticket inclut objectifs, fichiers, étapes, QA, estimation. Branches feature/ ou fix/, PR vers main, tests obligatoires, checklist QA.
+
+🔒 Priorités immédiates (sécurité + bugs)
+Paramètres sensibles
+
+Supprimer fallback SECRET_KEY, lire depuis env, erreur si absent.
+
+Remplacer CORS_ALLOW_ALL_ORIGINS par CORS_ALLOWED_ORIGINS (env, séparé par virgule).
+
+DEBUG contrôlé par env, forcé False en prod.
+
+Commande checks/startup_checks validant SECRET_KEY, ALLOWED_HOSTS, DATABASE_URL.
+
+QA : tests unitaires lecture env/startup check.
+
+Estimation : 2–4h.
+
+Incohérences champs ProductStatus
+
+Harmoniser noms (view_count, whatsapp_click_count).
+
+Corriger partout (models, views, serializers, managers, admin).
+
+Migration RenameField si nécessaire, sinon @property.
+
+QA : tests unitaires increment_*, tests API retrieve/track_click.
+
+Estimation : 6–10h.
+
+Nettoyage requirements
+
+Fusionner fichiers, supprimer doublons, pinner versions critiques.
+
+Optionnel : pip-tools.
+
+QA : install propre en CI.
+
+Estimation : 1–2h.
+
+⚙️ Priorités hautes (fiabilité & scalabilité)
+Migration PostgreSQL
+
+Ajouter dj-database-url/psycopg, utiliser DATABASE_URL.
+
+Créer docker-compose.yml (web, postgres, redis, celery, beat).
+
+Documenter migration SQLite → Postgres.
+
+QA : migrations OK, app fonctionnelle.
+
+Estimation : 8–16h.
+
+Durcissement Celery/Redis
+
+Valider CELERY_BROKER_URL, RESULT_BACKEND via env.
+
+Healthchecks workers docker-compose.
+
+Documenter commandes workers/beat.
+
+Optionnel : Flower monitoring.
+
+QA : tâche test newsletter.
+
+Estimation : 4–8h.
+
+Logging & Monitoring (Sentry)
+
+Ajouter sentry-sdk, init dans wsgi/asgi/settings.
+
+Config logging structuré.
+
+Endpoint /healthz/.
+
+QA : exception test remontée.
+
+Estimation : 3–4h.
+
+📊 Priorités moyennes (qualité & API)
+Tests unitaires/intégration
+
+Installer pytest-django, factory_boy, pytest-cov.
+
+Tests : models (slug/sku, ProductImage, ProductStatus), services (PromotionService), views (ProductViewSet, Promotion, Newsletter).
+
+Coverage ≥ 80%.
+
+QA : tests CI.
+
+Estimation : 3–5 jours.
+
+Standardiser responses API
+
+Créer helper api_response(success, data, message, error) ou mixin.
+
+Refactor views.
+
+QA : tests contractuels.
+
+Estimation : 6–12h.
+
+Robustesse promotions
+
+Utiliser transaction.atomic() + select_for_update().
+
+Tests concurrence simulée.
+
+QA : pas d’over-redemption.
+
+Estimation : 4–8h.
+
+Rate limiting/anti-spam
+
+Ajouter django-ratelimit ou DRF middleware.
+
+Appliquer sur endpoints sensibles.
+
+QA : réponses 429.
+
+Estimation : 3–4h.
+
+🛠️ Priorités basses (maintenabilité/dev)
+Linting/formatting/pre-commit
+
+Config black, isort, ruff, hooks CI.
+
+Estimation : 2–4h.
+
+Type hints/docstrings
+
+Ajouter annotations et docstrings aux fonctions critiques.
+
+Estimation : 1–2 jours.
+
+Documentation/README
+
+Variables env, commandes docker-compose, migrations, superuser, tests, backup/restore.
+
+Estimation : 2–4h.
+
+Stockage médias (S3)
+
+Ajouter django-storages[boto3], config DEFAULT_FILE_STORAGE.
+
+Documenter migration médias.
+
+Estimation : 4–8h.
+
+CI GitHub Actions
+
+Workflow lint/tests/security.
+
+Estimation : 8–12h.
+
+📌 Tickets spécifiques
+Harmoniser ProductStatus → migration + tests.
+
+PromotionService race-condition → atomic/select_for_update + tests.
+
+Middleware API responses → créer helper/mixin.
+
+🚀 CI/CD & Déploiement
+Pipeline GitHub Actions, build docker image, staging identique prod.
+
+📚 Runbooks utiles
+Dev local : docker-compose up, migrations, collectstatic, superuser, pytest.
+
+Backup Postgres : pg_dump / pg_restore.
+
+✅ Checklist livraison
+SECRET_KEY env, DEBUG=False
+
+CORS whitelist
+
+Postgres OK
+
+Celery workers/beat OK
+
+Sentry configuré
+
+Tests coverage ≥ 80%
+
+Linting/pre-commit OK
+
+Docker-compose + docs
+
+.env.example à jour
+
+Plan migration médias
+
+⏱️ Estimation globale
+Sécurité immédiate : 1–2j
+
+Postgres/docker-compose : 1–2j
+
+Celery/Sentry : 1–2j
+
+Tests initiaux : 3–6j
+
+CI/autres : 2–3j
+
+Total : 9–16 jours.
+
+🔮 Recommandations long terme
+Médias S3 + CDN
+
+Secrets Manager
+
+Monitoring Prometheus/Grafana
+
+Security scans automatisés
+
+Contract tests API

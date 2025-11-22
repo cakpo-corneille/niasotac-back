@@ -1,0 +1,310 @@
+/* 
+   static/admin/css/category_admin.css
+   Styles pour l'administration des catégories avec icônes
+*/
+
+/* ========== Miniature dans la liste (32x32px) ========== */
+
+.icon-thumbnail-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #f8f9fa;
+    border: 1px solid #e3e8ef;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.icon-thumbnail-wrapper:hover {
+    border-color: #417690;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transform: scale(1.1);
+}
+
+.icon-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Icône par défaut - petite taille */
+.default-icon-small {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.default-icon-small svg {
+    width: 24px;
+    height: 24px;
+    display: block;
+}
+
+/* ========== Aperçu dans le formulaire (128x128px) ========== */
+
+.icon-preview-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 15px;
+    background: #f8f9fa;
+    border: 1px solid #e3e8ef;
+    border-radius: 6px;
+    margin-top: 10px;
+}
+
+.icon-preview-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 128px;
+    height: 128px;
+    min-width: 128px;
+    background: white;
+    border: 2px solid #e3e8ef;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.icon-preview-box:hover {
+    border-color: #417690;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Animation de chargement */
+.icon-preview-box.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 3px solid #e3e8ef;
+    border-top-color: #417690;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.icon-preview-large {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Icône par défaut - grande taille */
+.default-icon-large {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e3e8ef 100%);
+}
+
+.default-icon-large svg {
+    width: 80px;
+    height: 80px;
+    display: block;
+    opacity: 0.6;
+}
+
+/* Informations de l'aperçu */
+.icon-preview-info {
+    flex: 1;
+}
+
+.icon-preview-info strong {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.icon-preview-info .help {
+    font-size: 12px;
+    color: #666;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* ========== Gestion d'erreur visuelle ========== */
+
+.icon-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: #fff3f3;
+    color: #d32f2f;
+    font-size: 11px;
+    text-align: center;
+    padding: 10px;
+}
+
+.icon-error::before {
+    content: '⚠';
+    font-size: 32px;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* ========== Input file personnalisé ========== */
+
+.field-icon_file {
+    position: relative;
+}
+
+.field-icon_file input[type="file"] {
+    padding: 8px 12px;
+    border: 2px dashed #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: #fafafa;
+}
+
+.field-icon_file input[type="file"]:hover {
+    border-color: #417690;
+    background: #f0f7fa;
+}
+
+.field-icon_file input[type="file"]:focus {
+    outline: none;
+    border-color: #417690;
+    box-shadow: 0 0 0 3px rgba(65, 118, 144, 0.1);
+}
+
+/* Badge de format accepté */
+.field-icon_file .help {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 8px;
+    background: #e3f2fd;
+    color: #1976d2;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* ========== Messages de succès/erreur ========== */
+
+.icon-upload-success {
+    padding: 10px 15px;
+    background: #e8f5e9;
+    border-left: 4px solid #4caf50;
+    color: #2e7d32;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.icon-upload-error {
+    padding: 10px 15px;
+    background: #ffebee;
+    border-left: 4px solid #f44336;
+    color: #c62828;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+/* ========== Responsive ========== */
+
+@media screen and (max-width: 768px) {
+    .icon-preview-container {
+        flex-direction: column;
+    }
+    
+    .icon-preview-box {
+        width: 100%;
+        max-width: 200px;
+    }
+}
+
+/* ========== Amélioration du changelist ========== */
+
+#result_list .icon-thumbnail-wrapper {
+    vertical-align: middle;
+}
+
+/* Alignement des colonnes */
+#result_list th:first-child,
+#result_list td:first-child {
+    text-align: center;
+}
+
+/* ========== Animation de fade-in pour les icônes ========== */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.icon-thumbnail,
+.icon-preview-large {
+    animation: fadeIn 0.3s ease;
+}
+
+/* ========== Tooltip pour informations supplémentaires ========== */
+
+.icon-info-tooltip {
+    position: relative;
+    display: inline-block;
+    cursor: help;
+    margin-left: 5px;
+    color: #666;
+}
+
+.icon-info-tooltip::before {
+    content: 'ⓘ';
+    font-size: 14px;
+}
+
+.icon-info-tooltip:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 12px;
+    background: #333;
+    color: white;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.icon-info-tooltip:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: #333;
+    z-index: 1000;
+}
